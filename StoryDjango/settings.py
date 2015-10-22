@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap3',
+    'django_forms_bootstrap',
     'story',
 )
 
@@ -109,3 +110,5 @@ BOOTSTRAP3 = {
     'base_url': '//cdn.bootcss.com/bootstrap/3.3.5/',
     #'base_url': '//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/',
 }
+
+LOGIN_URL = '/story/login'

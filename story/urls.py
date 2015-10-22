@@ -7,4 +7,7 @@ urlpatterns = [
     url(r'^createstory$', views.createstory, name='createstory'),
     url(r'^node/(?P<id>\d+)$', views.node, name='node'),
     url(r'^nodelist/(?P<parentid>\d+)/(?P<id>\d+)?$', views.nodelist, name='nodelist'),
+
+    url(r'^login$', views.login, name='login'),
+    url(r'^register$', views.register, name='register'),
 ]

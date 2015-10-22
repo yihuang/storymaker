@@ -1,12 +1,18 @@
 {% extends 'story/base.html' %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="btn-group" role="group" aria-label="...">
-    <button onclick="window.location='{% url "story:createstory" %}'" type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
+            <li style="list-style:none;margin:0;padding:0;width:10%;"></li>
+            <li style="list-style:none;margin:0;padding:0"><b>故事列表</b></li>
+            <li style="list-style:none;margin:0;padding:0;"><button class="btn btn-default glyphicon glyphicon-plus" onclick="window.location='{% url "story:createstory" %}'"></button></li>
+        </ul>
+    </div>
 </div>
 <div class="list-group">
     {% for story in stories %}
-    <a href="{% url 'story:nodelist' parentid=story.root.id %}" class="list-group-item">{{story.title}}</a>
+    <a href="{% url 'story:nodelist' parentid=story.root.id %}" class="list-group-item"><span class="badge">★ {{story.stars|default:0}}</span>{{story.title}}</a>
     {% endfor %}
 </div>
 {% endblock %}

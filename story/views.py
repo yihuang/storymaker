@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login as auth_login
 from .models import Story, StoryNode
+from .forms import LoginForm, RegisterForm
+
 
 def index(request):
     stories = Story.objects.all()
@@ -11,7 +14,7 @@ def createstory(request):
     if request.method=='POST':
         story = Story(title=request.POST['title'], created_by=request.user)
         story.save()
-        storynode = StoryNode(story=story, title='root', content=request.POST['content'], parent=None, created_by=request.user)
+        storynode = StoryNode(story=story, title='', content=request.POST['content'], parent=None, created_by=request.user)
         storynode.save()
         story.root = storynode
         story.save()
@@ -37,3 +40,34 @@ def nodelist(request, parentid, id=None):
     parent = StoryNode.objects.get(pk=int(parentid))
     nodes = StoryNode.objects.filter(parent_id=parent.id)
     return render(request, 'story/nodelist.html', {'nodes': nodes, 'parent': parent, 'id': id})
+
+
+def login(request):
+    error = []
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            username = data['username']
+            password = data['password']
+            user = authenticate(username=username, password=password)
+            if user and user.is_active:
+                auth_login(request, user)
+                return redirect('index')
+            else:
+                error.append('Please input the correct password')
+        else:
+            error.append('Please input both username and password')
+    else:
+        form = LoginForm()
+    return render(request, 'story/login.html', {'form': form})
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+    else:
+        form = RegisterForm()
+    return render(request, 'story/register.html', {'form': form})

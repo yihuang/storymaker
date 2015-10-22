@@ -1,3 +1,4 @@
 from django.contrib import admin
+from .models import Story, StoryNode
 
-# Register your models here.
+admin.register((Story, StoryNode))

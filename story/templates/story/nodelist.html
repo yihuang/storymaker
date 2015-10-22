@@ -2,12 +2,16 @@
 {% block title %}nodelist{% endblock %}
 
 {% block content %}
-<div class="btn-group" role="group" aria-label="...">
-    <button type="button" onclick="window.location='{% if id %}{% url "story:node" id=id %}{% else %}{% url "index" %}{% endif %}'" class="btn btn-default glyphicon glyphicon-menu-left"></button>
-    <button type="button" onclick="window.location='{% url "story:createnode" id=parent.id %}'" class="btn btn-default glyphicon glyphicon-pencil"></button>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
+            <li style="list-style:none;margin:0;padding:0"><button type="button" onclick="window.location='{% if id %}{% url "story:node" id=id %}{% else %}{% url "index" %}{% endif %}'" class="btn btn-default glyphicon glyphicon-menu-left"></button></li>
+            <li style="list-style:none;margin:0;padding:0"><b>平行章节<b/></li>
+            <li style="list-style:none;margin:0;padding:0;width:10%;"><button type="button" onclick="window.location='{% url "story:createnode" id=parent.id %}'" class="btn btn-default glyphicon glyphicon-plus"></button></li>
+        </ul>
+    </div>
 </div>
-<h1><{{parent.story.title}}></h1>
-<h2>Last Section: {{parent.title}}</h2>
+<!--<p>上一章：<b><a href="{{parent.get_absolute_url}}">{{parent.title}}</a></b></p>-->
 <div class="list-group">
     {% for node in nodes %}
     <a href="{% url 'story:node' id=node.id %}" class="list-group-item">{{node.title}}</a>
