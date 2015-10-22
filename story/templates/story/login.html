@@ -1,15 +1,15 @@
-{% extends 'bootstrap3/bootstrap3.html' %}
+{% extends 'story/base.html' %}
 {% load bootstrap3 %}
 {% load bootstrap_tags %}
 
-{% block bootstrap3_title %}登录{% endblock %}
+{% block title %}登录{% endblock %}
 
-{% block bootstrap3_content %}
+{% block content %}
 <div class="panel panel-default">
     <div class="panel-body">
         <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
             <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "index" %}'" class="btn btn-default glyphicon glyphicon-chevron-left"></button></li>
-            <li style="list-style:none;margin:0;padding:0">登录</li>
+            <li style="list-style:none;margin:0;padding:0"><b>登录</b></li>
             <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "story:register" %}'" class="btn btn-default">注册</button></li>
         </ul>
     </div>

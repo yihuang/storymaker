@@ -1,9 +1,9 @@
-{% extends 'bootstrap3/bootstrap3.html' %}
+{% extends 'story/base.html' %}
 {% load bootstrap3 %}
 
-{% block bootstrap3_title %}create{% endblock %}
+{% block title %}create{% endblock %}
 
-{% block bootstrap3_content %}
+{% block content %}
 <form method="POST">
     {% csrf_token %}
 <div class="panel panel-default">
