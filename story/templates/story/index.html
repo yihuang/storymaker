@@ -1,0 +1,12 @@
+{% extends 'story/base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="btn-group" role="group" aria-label="...">
+    <button onclick="window.location='{% url "story:createstory" %}'" type="button" class="btn btn-default glyphicon glyphicon-pencil"></button>
+</div>
+<div class="list-group">
+    {% for story in stories %}
+    <a href="{% url 'story:nodelist' parentid=story.root.id %}" class="list-group-item">{{story.title}}</a>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}create{% endblock %}
+
+{% block bootstrap3_content %}
+<h1>Last Section: <a href="{{parent.get_absolute_url}}">{{parent.title}}</a></h1>
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label style="width:100%" for="title">
+            Title:<input type="text" name="title" class="form-control" placeholder="Title"/>
+        </label>
+    </div>
+    <div class="form-group">
+        <label style="width:100%" for="content">
+            Content:<textarea name="content" class="form-control" placeholder="Content" rows="5"></textarea>
+        </label>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
+{% endblock %}

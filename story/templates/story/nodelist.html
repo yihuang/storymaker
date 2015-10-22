@@ -1,0 +1,16 @@
+{% extends 'story/base.html' %}
+{% block title %}nodelist{% endblock %}
+
+{% block content %}
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" onclick="window.location='{% if id %}{% url "story:node" id=id %}{% else %}{% url "index" %}{% endif %}'" class="btn btn-default glyphicon glyphicon-menu-left"></button>
+    <button type="button" onclick="window.location='{% url "story:createnode" id=parent.id %}'" class="btn btn-default glyphicon glyphicon-pencil"></button>
+</div>
+<h1><{{parent.story.title}}></h1>
+<h2>Last Section: {{parent.title}}</h2>
+<div class="list-group">
+    {% for node in nodes %}
+    <a href="{% url 'story:node' id=node.id %}" class="list-group-item">{{node.title}}</a>
+    {% endfor %}
+</div>
+{% endblock %}

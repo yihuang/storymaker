@@ -1,0 +1,11 @@
+{% extends 'story/base.html' %}
+{% block title %}node{% endblock %}
+
+{% block content %}
+<div class="btn-group" role="group" aria-label="...">
+    <button type="button" onclick="window.location='{% url "index" %}'" class="btn btn-default glyphicon glyphicon-menu-left"></button>
+    <button type="button" onclick="window.location='{% url "story:nodelist" parentid=node.parent_id id=node.id %}'" class="btn btn-default glyphicon glyphicon-list"></button>
+</div>
+<h1>{{node.title}} </h1>
+<pre>{{node.content}}</pre>
+{% endblock %}
