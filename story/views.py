@@ -71,6 +71,8 @@ def story(request, id):
         cs = children[node['id']]
 
     nodes = StoryNode.objects.filter(id__in=[n['id'] for n in rawnodes])
+    for n in nodes:
+        n.count = len(children[n.parent_id]) - 1
     return render(request, 'story/story.html', {'story': story, 'nodes': nodes})
 
 

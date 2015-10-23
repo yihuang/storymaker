@@ -17,6 +17,9 @@
     <a href="{% url 'story:node' id=node.id %}" class="list-group-item">
         <span class="badge">★ {{node.stars|default:0}}</span>
         <span class="badge">作者: {{node.created_by.first_name}}</span>
+        {% if node.count %}
+        <span class="badge">平行: {{node.count}}</span>
+        {% endif %}
         {{node.title}}
     </a>
     {% endfor %}
