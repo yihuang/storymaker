@@ -60,7 +60,7 @@ def story(request, id):
         children[c['parent_id']].append(c)
 
     def sort_key(node):
-        return (node['created_by_id'] != story.created_by_id, node['stars'])
+        return (node['created_by_id'] != story.created_by_id, node['created_at'])
 
     rawnodes = []
     cs = children[story.root_id]
