@@ -10,7 +10,7 @@
         <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
             <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "index" %}'" class="btn btn-default glyphicon glyphicon-chevron-left"></button></li>
             <li style="list-style:none;margin:0;padding:0"><b>登录</b></li>
-            <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "story:register" %}'" class="btn btn-default">注册</button></li>
+            <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "story:register" %}?{{redirect_name}}={{redirect_to}}'" class="btn btn-default">注册</button></li>
         </ul>
     </div>
 </div>

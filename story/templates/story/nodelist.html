@@ -7,14 +7,20 @@
         <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
             <li style="list-style:none;margin:0;padding:0"><button type="button" onclick="window.location='{% if id %}{% url "story:node" id=id %}{% else %}{% url "index" %}{% endif %}'" class="btn btn-default glyphicon glyphicon-menu-left"></button></li>
             <li style="list-style:none;margin:0;padding:0"><b>平行章节<b/></li>
-            <li style="list-style:none;margin:0;padding:0;width:10%;"><button type="button" onclick="window.location='{% url "story:createnode" id=parent.id %}'" class="btn btn-default glyphicon glyphicon-plus"></button></li>
+            <li style="list-style:none;margin:0;padding:0;width:10%;">
+                <button type="button" onclick="window.location='{% url "story:createnode" id=parent.id %}'" class="btn btn-default glyphicon glyphicon-plus"></button>
+            </li>
         </ul>
     </div>
 </div>
-<!--<p>上一章：<b><a href="{{parent.get_absolute_url}}">{{parent.title}}</a></b></p>-->
 <div class="list-group">
+    <div class="list-group-item">上一章：{% if parent.title %}<b><a href="{{parent.get_absolute_url}}">{{parent.title}}</a></b>{%else%}无{%endif%}</div>
     {% for node in nodes %}
-    <a href="{% url 'story:node' id=node.id %}" class="list-group-item">{{node.title}}</a>
+    <a href="{% url 'story:node' id=node.id %}" class="list-group-item">
+        <span class="badge">★ {{node.stars|default:0}}</span>
+        <span class="badge">作者: {{node.created_by.first_name}}</span>
+        {{node.title}}
+    </a>
     {% endfor %}
 </div>
 {% endblock %}
