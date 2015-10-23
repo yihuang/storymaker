@@ -1,8 +1,10 @@
+# coding: utf-8
+from collections import defaultdict
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login as auth_login, REDIRECT_FIELD_NAME
 from .models import Story, StoryNode
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, StoryForm, NodeForm
 
 
 def index(request):
@@ -13,19 +15,13 @@ def index(request):
 @login_required
 def createstory(request):
     if request.method == 'POST':
-        story = Story(title=request.POST['title'], created_by=request.user)
-        story.save()
-        storynode = StoryNode(
-            story=story,
-            title='',
-            content=request.POST['content'],
-            parent=None,
-            created_by=request.user)
-        storynode.save()
-        story.root = storynode
-        story.save()
-        return redirect('story:createnode', id=storynode.id)
-    return render(request, 'story/createstory.html', {})
+        form = StoryForm(request.POST)
+        if form.is_valid():
+            story = form.save(request.user)
+            return redirect('story:createnode', id=story.root_id)
+    else:
+        form = StoryForm()
+    return render(request, 'story/createstory.html', {'form': form})
 
 
 @login_required
@@ -34,20 +30,48 @@ def createnode(request, id):
     parent = StoryNode.objects.get(pk=id)
     story = parent.story
     if request.method == 'POST':
-        node = StoryNode(
-            title=request.POST['title'],
-            content=request.POST['content'],
-            created_by=request.user,
-            story=story,
-            parent=parent)
-        node.save()
-        return redirect('story:node', id=node.id)
-    return render(request, 'story/createnode.html', {'story': story, 'parent': parent})
+        form = NodeForm(request.POST)
+        if form.is_valid():
+            node = form.save(story, parent, request.user)
+            return redirect('story:node', id=node.id)
+    else:
+        form = NodeForm()
+    return render(request, 'story/createnode.html', {'story': story, 'parent': parent, 'form': form})
 
 
 def node(request, id):
     node = StoryNode.objects.get(pk=int(id))
     return render(request, 'story/node.html', {'node': node})
+
+
+def story(request, id):
+    story = Story.objects.get(pk=int(id))
+    candidates = StoryNode.objects\
+        .filter(story=story)\
+        .values('id',
+                'parent_id',
+                'created_by_id',
+                'stars',
+                'created_at'
+                )
+
+    children = defaultdict(list)
+    for c in candidates:
+        children[c['parent_id']].append(c)
+
+    def sort_key(node):
+        return (node['created_by_id'] != story.created_by_id, node['stars'])
+
+    rawnodes = []
+    cs = children[story.root_id]
+    while cs:
+        cs.sort(key=sort_key)
+        node = cs[0]
+        rawnodes.append(node)
+        cs = children[node['id']]
+
+    nodes = StoryNode.objects.filter(id__in=[n['id'] for n in rawnodes])
+    return render(request, 'story/story.html', {'story': story, 'nodes': nodes})
 
 
 def nodelist(request, parentid, id=None):

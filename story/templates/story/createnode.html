@@ -1,5 +1,6 @@
 {% extends 'story/base.html' %}
 {% load bootstrap3 %}
+{% load bootstrap_tags %}
 
 {% block title %}create{% endblock %}
 
@@ -9,7 +10,7 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
-            <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "story:nodelist" parentid=parent.id %}'" class="btn btn-default glyphicon glyphicon-chevron-left"></button></li>
+            <li style="list-style:none;margin:0;padding:0"><button onclick="window.location='{% url "story:nodelist" parentid=parent.id %}';return false;" class="btn btn-default glyphicon glyphicon-chevron-left"></button></li>
             <li style="list-style:none;margin:0;padding:0">
 上一章: {% if parent.title %}<b><a href="{{parent.get_absolute_url}}">{{parent.title}}</a></b>{%else%}无{%endif%}
             </li>
@@ -17,15 +18,6 @@
         </ul>
     </div>
 </div>
-    <div class="form-group">
-        <label style="width:100%" for="title">
-            章节名:<input type="text" name="title" class="form-control" placeholder="Title"/>
-        </label>
-    </div>
-    <div class="form-group">
-        <label style="width:100%" for="content">
-            内容:<textarea name="content" class="form-control" placeholder="Content" rows="5"></textarea>
-        </label>
-    </div>
+{{form|as_bootstrap}}
 </form>
 {% endblock %}

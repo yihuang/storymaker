@@ -8,6 +8,9 @@ class Story(models.Model):
     created_by = models.ForeignKey(User)
     root = models.ForeignKey('StoryNode', related_name='+', null=True)
 
+    def get_absolute_url(self):
+        return reverse('story:story', kwargs={'id': self.id})
+
 
 class StoryNode(models.Model):
     title = models.CharField(max_length=256)

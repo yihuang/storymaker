@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^createnode/(?P<id>\d+)$', views.createnode, name='createnode'),
     url(r'^createstory$', views.createstory, name='createstory'),
     url(r'^node/(?P<id>\d+)$', views.node, name='node'),
+    url(r'^story/(?P<id>\d+)$', views.story, name='story'),
     url(r'^nodelist/(?P<parentid>\d+)/(?P<id>\d+)?$', views.nodelist, name='nodelist'),
 
     url(r'^login$', views.login, name='login'),

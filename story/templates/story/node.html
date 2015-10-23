@@ -5,11 +5,11 @@
 <div class="panel panel-default">
     <div class="panel-body">
         <ul style="display:flex;flex-direction:row;padding:0; margin:0;justify-content:space-between;align-items:center;">
-            <li style="list-style:none;margin:0;padding:0"><button class="btn btn-default glyphicon glyphicon-chevron-left" onclick="window.location='{% url "index" %}'"></button></li>
+            <li style="list-style:none;margin:0;padding:0"><button class="btn btn-default glyphicon glyphicon-chevron-left" onclick="window.location='{% url "story:story" id=node.story_id %}'"></button></li>
             <li style="list-style:none;margin:0;padding:0"><b>{{node.title}}</b></li>
             <li style="list-style:none;margin:0;padding:0">
                 <button type="submit" class="btn btn-default glyphicon glyphicon-arrow-down" onclick="window.location='{% url "story:nodelist" parentid=node.id %}'"></button>
-                <button type="submit" class="btn btn-default glyphicon glyphicon-plus" onclick="window.location='{% url "story:createnode" id=node.id %}'"></button>
+                <!--<button type="submit" class="btn btn-default glyphicon glyphicon-plus" onclick="window.location='{% url "story:createnode" id=node.id %}'"></button>-->
                 <button type="submit" class="btn btn-default glyphicon glyphicon-list" onclick="window.location='{% url "story:nodelist" parentid=node.parent_id id=node.id %}'"></button>
             </li>
         </ul>

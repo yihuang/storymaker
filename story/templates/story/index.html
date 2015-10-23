@@ -12,7 +12,7 @@
 </div>
 <div class="list-group">
     {% for story in stories %}
-    <a href="{% url 'story:nodelist' parentid=story.root.id %}" class="list-group-item">
+    <a href="{{story.get_absolute_url}}" class="list-group-item">
         <span class="badge">★ {{story.stars|default:0}}</span>
         <span class="badge">作者: {{story.created_by.first_name}}</span>
         <h4 class="list-group-item-heading">{{story.title}}</h4>
